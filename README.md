@@ -87,11 +87,10 @@ $$
 
 $$
 S_m(d) =
-\frac{\left|\{y : D_{y,m} \ge d\}\right|}{N},
+\frac{\left|\lbrace y \mid D_{y,m} \ge d \rbrace\right|}{N},
 \qquad
 R_{y,m} = -\ln S_m(D_{y,m})
 $$
-
 
 Ties are included in the survival count. This version uses the same reference years for annual normalization, construction of $C_m$, and evaluation of $S_m$. Rarity is therefore **in-sample**;   
 it is not an out-of-sample anomaly probability. For $N$ reference years, $0 \le R \le \ln N$.
