@@ -67,21 +67,21 @@ For each variable independently, and for each year \(y\) and calendar month \(m\
 
 **1. Annual robust normalization**
 
-$$
-M_y = \mathrm{median}_m X_{y,m}, \qquad
+$$ 
+M_y = \operatorname{median}_m X_{y,m}, \qquad
 IQR_y = Q_{0.75}(X_{y,\cdot}) - Q_{0.25}(X_{y,\cdot}), \qquad
-Z_{y,m} = \frac{X_{y,m} - M_y}{IQR_y}.
+Z_{y,m} = \frac{X_{y,m} - M_y}{IQR_y}. 
 $$
 
 Quantiles use NumPy's default linear interpolation. Years with zero annual IQR are invalid.
 
 **2. Shared calendar-month reference path**
 
-$$
-C_m = \mathrm{median}_y Z_{y,m}, \qquad
+$$ 
+C_m = \operatorname{median}_y Z_{y,m}, \qquad
 p_{y,m} = Z_{y,m} - C_m, \qquad
-D_{y,m} = |p_{y,m}|.
-$$
+D_{y,m} = |p_{y,m}|. 
+$$ 
 
 **3. Empirical month-conditioned rarity**
 
@@ -92,14 +92,15 @@ S_m(d) =
 R_{y,m} = -\ln S_m(D_{y,m})
 $$
 
-Ties are included in the survival count. This version uses the same reference years for annual normalization, construction of $C_m$, and evaluation of $S_m$. Rarity is therefore **in-sample**;   
-it is not an out-of-sample anomaly probability. For $N$ reference years, $0 \le R \le \ln N$.
+
+Ties are included in the survival count. This version uses the same reference years for annual normalization, construction of $ C_m $, and evaluation of $ S_m $. Rarity is therefore **in-sample**;   
+it is not an out-of-sample anomaly probability. For $ N $ reference years, $ 0 \le R \le \ln N $.
 
 **4. Signed and unsigned rarity-weighted position**
 
-$$
+$$ 
 pR_{y,m} = p_{y,m} R_{y,m}, \qquad
-DR_{y,m} = D_{y,m} R_{y,m}.
+DR_{y,m} = D_{y,m} R_{y,m}. 
 $$
 
 `pR` preserves the sign of the deviation; `DR` measures its unsigned rarity-weighted magnitude. Neither replaces the original `X`.
@@ -108,16 +109,16 @@ $$
 
 Transitions are calculated **within each year**, from February through December. January starts a new path; December-to-January transitions are not included in v0.1.1.
 
-$$
+$$ 
 \Delta p = p_t-p_{t-1},\qquad
 \Delta R = R_t-R_{t-1},\qquad
-\Delta(pR) = p_tR_t-p_{t-1}R_{t-1}.
+\Delta(pR) = p_tR_t-p_{t-1}R_{t-1}. 
 $$
 
 The following ordered algebraic identity is exact (up to floating-point precision):
 
-$$
-\Delta(pR) = R_{t-1}\Delta p + p_t\Delta R.
+$$ 
+\Delta(pR) = R_{t-1}\Delta p + p_t\Delta R. 
 $$
 
 The two terms are labeled `position_term` and `rarity_term`. They are **not independent causal effects**. Since each month has its own empirical reference distribution, changes in `R` can reflect both a change in distance and a change in calendar-month reference.
