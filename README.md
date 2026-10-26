@@ -67,21 +67,21 @@ For each variable independently, and for each year \(y\) and calendar month \(m\
 
 **1. Annual robust normalization**
 
-$$ 
-M_y = \operatorname{median}_m X_{y,m}, \qquad
+$$
+M_y = \mathrm{median}_m X_{y,m}, \qquad
 IQR_y = Q_{0.75}(X_{y,\cdot}) - Q_{0.25}(X_{y,\cdot}), \qquad
-Z_{y,m} = \frac{X_{y,m} - M_y}{IQR_y}. 
+Z_{y,m} = \frac{X_{y,m} - M_y}{IQR_y}
 $$
 
 Quantiles use NumPy's default linear interpolation. Years with zero annual IQR are invalid.
 
 **2. Shared calendar-month reference path**
 
-$$ 
-C_m = \operatorname{median}_y Z_{y,m}, \qquad
+$$
+C_m = \mathrm{median}_y Z_{y,m}, \qquad
 p_{y,m} = Z_{y,m} - C_m, \qquad
-D_{y,m} = |p_{y,m}|. 
-$$ 
+D_{y,m} = |p_{y,m}|
+$$
 
 **3. Empirical month-conditioned rarity**
 
